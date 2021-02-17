@@ -1,25 +1,22 @@
 package hellojpa;
 
+import org.hibernate.annotations.SortComparator;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-//@Table(name= "USER")
-//@TableGenerator()
-//@SequenceGenerator(
-//        name = "MEMBER_SEQ_GENERATOR",
-//        sequenceName = "MEMBER_SEQ",
-//        initialValue = 1, allocationSize = 50
-//)
 public class Member {
 
-    @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column()
-    private String name;
+    @Column(name= "username")
+    private String username;
+
+    @Column(name = "TEAM_ID")
+    private Long teamId;
 
     public Long getId() {
         return id;
@@ -29,16 +26,19 @@ public class Member {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    //기본생성자는 무조건 있어야 함
-    public Member() {
+    public Long getTeamId() {
+        return teamId;
+    }
 
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 }
