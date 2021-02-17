@@ -19,25 +19,32 @@ public class JpaMain {
         tx.begin();
 
         try {
+
             Team team = new Team();
             team.setName("TeamA");
             em.persist(team);
 
             Member member = new Member();
             member.setUsername("member1");
-//            member.setTeamId(team.getId());
-            member.setTeam(team);
+            member.changeTeam(team);
             em.persist(member);
+
+            //연관관계 주인이 아니여서 수정 삽입이 불가능*****
+            //하지만 적어줘야함..  1. 객체지향적이여야 하니까
+            // 2. 테스트 케이스 작성하기 위해
+            //편의 메서드를 생성해서 거기에 넣음(setTeam())에 team.getMembers().add(member);를 넣음
+            //team.getMembers().add(member);
 
             em.flush();
             em.clear();
 
             Member findMember = em.find(Member.class, member.getId());
+            //양방향 연관관계
+            List<Member> members = findMember.getTeam().getMembers();
 
-//            Long findTeamId = findMember.getTeamId();
-//            Team findTeam = em.find(Team.class, findTeamId);
-            Team findTeam = findMember.getTeam();
-            System.out.println("findTeam= " + findTeam.getName());
+
+
+
 
             tx.commit();
         } catch (Exception e) {

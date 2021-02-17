@@ -18,6 +18,7 @@ public class Member {
 //    @Column(name = "TEAM_ID")
 //    private Long teamId;
 
+    //외래키가 있는 곳을 주인**
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
@@ -26,8 +27,10 @@ public class Member {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void changeTeam(Team team) {
         this.team = team;
+
+        team.getMembers().add(this);
     }
 
     public Long getId() {
