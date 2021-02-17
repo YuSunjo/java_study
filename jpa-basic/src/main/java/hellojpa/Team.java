@@ -17,6 +17,11 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private List<Member> members = new ArrayList<>();
 
+    //일대다 단방향  -> 일쪽이 연관관계 주인
+//    @OneToMany
+//    @JoinColumn
+//    private List<Member> members = new ArrayList<>();
+
     public List<Member> getMembers() {
         return members;
     }
