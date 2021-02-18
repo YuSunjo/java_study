@@ -1,5 +1,7 @@
 package hellojpa;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -19,22 +21,24 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Member member = new Member();
+            member.setUsername("hello");
 
-            Movie movie = new Movie();
-            movie.setDirector("a");
-            movie.setActor("bbb");
-            movie.setName("sdfsdf");
-            movie.setPrice(10000);
-
-            em.persist(movie);
+            em.persist(member);
 
             em.flush();
             em.clear();
 
-            //조회할때 알아서 조인해서 가져옴옴
-            Movie findovie = em.find(Movie.class, movie.getId());
+//            Member findMember = em.find(Member.class, member.getId());
+            //초기화 할 때는 sql 이 생성 안되고 쓰일 경우 호출함
+            Member findMember = em.getReference(Member.class, member.getId());
+            System.out.println("findMember = " + findMember.getClass());
+            System.out.println("findMember.id" + findMember.getId());
+            System.out.println("findMember.username" + findMember.getUsername());
+            findMember.getUsername();
+            System.out.println("findMember = " + emf.getPersistenceUnitUtil().isLoaded(findMember));
 
-
+            Hibernate.initialize(findMember);   //강제 초기화
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
