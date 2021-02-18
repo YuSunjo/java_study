@@ -2,10 +2,7 @@ package hellojpa;
 
 import org.hibernate.Hibernate;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.sql.SQLOutput;
 import java.util.List;
 
@@ -21,24 +18,25 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("hello");
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
 
-            em.persist(member);
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            member1.setTeam(team);
+            em.persist(member1);
 
             em.flush();
             em.clear();
 
-//            Member findMember = em.find(Member.class, member.getId());
-            //초기화 할 때는 sql 이 생성 안되고 쓰일 경우 호출함
-            Member findMember = em.getReference(Member.class, member.getId());
-            System.out.println("findMember = " + findMember.getClass());
-            System.out.println("findMember.id" + findMember.getId());
-            System.out.println("findMember.username" + findMember.getUsername());
-            findMember.getUsername();
-            System.out.println("findMember = " + emf.getPersistenceUnitUtil().isLoaded(findMember));
+//            Member m = em.find(Member.class, member1.getId());
+//            System.out.println("m"+ m.getTeam().getClass());
 
-            Hibernate.initialize(findMember);   //강제 초기화
+            //지연로딩(lazy)인데 team의 정보도 필요하면 fetch join해야 함
+            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class)
+                    .getResultList();
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();

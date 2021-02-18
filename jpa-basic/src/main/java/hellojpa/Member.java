@@ -20,8 +20,10 @@ public class Member extends BaseEntity {
 //    @Column(name = "TEAM_ID")
 //    private Long teamId;
 
-    //외래키가 있는 곳을 주인**
-    @ManyToOne
+    //프록시 객체로 조회
+    @ManyToOne(fetch = FetchType.LAZY)
+    //즉시 로딩  join해서 member team 까지 같이 가지고옴
+//    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
@@ -59,4 +61,7 @@ public class Member extends BaseEntity {
         this.username = username;
     }
 
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }
