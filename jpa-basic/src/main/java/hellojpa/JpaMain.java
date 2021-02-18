@@ -18,24 +18,18 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("teamA");
-            em.persist(team);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            Member member1 = new Member();
-            member1.setUsername("member1");
-            member1.setTeam(team);
-            em.persist(member1);
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-            em.flush();
-            em.clear();
+            em.persist(parent);
+            //cascade 해줘서 알아서 들어감
+//            em.persist(child1);
+//            em.persist(child2);
 
-//            Member m = em.find(Member.class, member1.getId());
-//            System.out.println("m"+ m.getTeam().getClass());
-
-            //지연로딩(lazy)인데 team의 정보도 필요하면 fetch join해야 함
-            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class)
-                    .getResultList();
 
             tx.commit();
         } catch (Exception e) {
