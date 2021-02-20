@@ -33,23 +33,7 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            //내부 조인
-            em.createQuery("select m from Member m inner join m.team t", Member.class)
-                    .getResultList();
-            //외부 조인
-            em.createQuery("select m from Member m left join m.team t", Member.class)
-                    .getResultList();
-            //세타 조인
-            em.createQuery("select m from Member m, Team t where m.username = t.name", Member.class)
-                    .getResultList();
-
-            //조인 대상 필터링
-            em.createQuery("select m from Member m left join m.team t on t.name='teamA'", Member.class)
-                    .getResultList();
-
-            //연관관계가 없는 엔티티 외부 조인
-            em.createQuery("select m from Member m left join Team t on m.username = t.name", Member.class)
-                    .getResultList();
+            em.createQuery("select m.username, 'HELLO', true from Member m where m.type = jpql.MemberType.ADMIN");
 
             tx.commit();
         } catch (Exception e) {
