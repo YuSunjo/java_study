@@ -27,12 +27,20 @@ public class Member2 {
     @ElementCollection
     @CollectionTable(name = "FAVORITE_FOOD", joinColumns =
     @JoinColumn(name = "MEMBER_ID"))
-    private Set<String> favoriteFoods = new HashSet<>();
+    private List<String> favoriteFoods = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(name = "ADDRESS", joinColumns =
     @JoinColumn(name = "MEMBER_ID"))
     private List<Address> addressHistory = new ArrayList<>();
+
+//    @Embedded
+//    @AttributeOverrides({
+//            @AttributeOverride(name = "city", column = @Column("WORK_CITY")),
+//            @AttributeOverride(name = "street", column = @Column("WORK_STREET")),
+//            @AttributeOverride(name = "zipcode", column = @Column("WORK_ZIPCODE"))
+//    })
+//    private Address workAddress;
 
     public Long getId() {
         return id;
@@ -65,24 +73,5 @@ public class Member2 {
     public void setHomeAddress(Address homeAddress) {
         this.homeAddress = homeAddress;
     }
-
-    public Address getWorkAddress() {
-        return workAddress;
-    }
-
-    public void setWorkAddress(Address workAddress) {
-        this.workAddress = workAddress;
-    }
-
-    @Embedded
-    private Address homeAddress;
-
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "city", column = @Column"WORK_CITY"),
-            @AttributeOverride(name = "street", column = @Column"WORK_STREET"),
-            @AttributeOverride(name = "zipcode", column = @Column"WORK_ZIPCODE")
-    })
-    private Address workAddress;
 
 }
