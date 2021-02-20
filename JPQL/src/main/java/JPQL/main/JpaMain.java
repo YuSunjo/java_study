@@ -33,18 +33,14 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            //조건 case식
-            String query =
-                    "select " +
-                            "case when m.age <= 10 then '학생요금' " +
-                            "     when m.age >=60 then '경로요금' " +
-                            "     else '일반요금' " +
-                            "end " +
-                            "from Member m";
 
-            //COALESCE, NULLIF 도 있음
+            //기본 함수...concat, substring, trim, lower,...
+//            String query =" select concat('a', 'b') from Member m ";
 
-            em.createQuery(query)
+            //사용자 정의 함수 -- 쓰기위해서 등록하고 써야함
+            String Myquery =" select function('group_concat', m.username) from Member m ";
+
+            em.createQuery(Myquery)
                     .getResultList();
 
             tx.commit();
