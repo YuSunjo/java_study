@@ -23,20 +23,15 @@ public class JpaMain {
             member.setAge(10);
             em.persist(member);
 
-//            em.createQuery("select m.team from Member m", Team.class)
-//                    .getResultList();
-//            em.createQuery("select t from Member m join m.team t", Team.class);
+            em.flush();
+            em.clear();
 
-            //Objcet[]로 여러값 조회
-//            List<Object[]> resultList = em.createQuery("select m.username, m.age from Member m")
-//                    .getResultList();
-//            Object[] result = resultList.get(0);
-
-            //new 로 여러값 조회회
-            List<MemberDto> resultList = em.createQuery("select new jpql.MemberDto(m.username, m.age) from Member m", MemberDto.class)
+            em.createQuery("select m from Member m order by m.age desc", Member.class)
+                    .setFirstResult(1)
+                    .setMaxResults(10)
                     .getResultList();
 
-            MemberDto memberDto = resultList.get(0);
+
 
 
             tx.commit();
