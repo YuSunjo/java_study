@@ -1,6 +1,8 @@
 package JPQL.main;
 
 import JPQL.Member;
+import JPQL.MemberDto;
+import JPQL.Team;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,17 +23,20 @@ public class JpaMain {
             member.setAge(10);
             em.persist(member);
 
-            //typeQuery와 Query
-            TypedQuery<Member> query = em.createQuery("select m from Member m", Member.class);
-            Query query1 = em.createQuery("select m.username, m.age from Member m");
+//            em.createQuery("select m.team from Member m", Team.class)
+//                    .getResultList();
+//            em.createQuery("select t from Member m join m.team t", Team.class);
 
-            List<Member> result = query.getResultList();
-            Member singleResult = query.getSingleResult();
+            //Objcet[]로 여러값 조회
+//            List<Object[]> resultList = em.createQuery("select m.username, m.age from Member m")
+//                    .getResultList();
+//            Object[] result = resultList.get(0);
 
-            // 파라미터 바인딩
-            Member result2 = em.createQuery("select m from Member m where m.username = :username", Member.class)
-                    .setParameter("username", "member1")
-                    .getSingleResult();
+            //new 로 여러값 조회회
+            List<MemberDto> resultList = em.createQuery("select new jpql.MemberDto(m.username, m.age) from Member m", MemberDto.class)
+                    .getResultList();
+
+            MemberDto memberDto = resultList.get(0);
 
 
             tx.commit();
