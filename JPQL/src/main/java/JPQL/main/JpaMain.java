@@ -53,9 +53,15 @@ public class JpaMain {
 //            String query = "select t from Team t join fetch t.members";
 
             //컬렉션 패치조인 중복 제거
-            String query = "select distinct t from Team t join fetch t.members";
+//            String query = "select distinct t from Team t join fetch t.members";
+
+            //패치 조인의 한계 -> 별칭을 주면X
+            String query = "select t from Team t join fetch t.members m";
+
             List<Team> resultList = em.createQuery(query, Team.class)
                     .getResultList();
+
+
 
 //            for (Member member : resultList) {
 //                System.out.println("Member="+ member);
