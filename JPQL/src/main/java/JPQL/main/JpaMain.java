@@ -33,14 +33,17 @@ public class JpaMain {
             em.flush();
             em.clear();
 
+            String Myquery ="select m.username from Member m " +
+                    "join m.team t " +
+                    "join m.orders o where t.name='teamA'";
 
-            //기본 함수...concat, substring, trim, lower,...
-//            String query =" select concat('a', 'b') from Member m ";
+            //t.members -> 컬렉션이여서 탐색 불가능
+//            String query = "select t.members From Team t";
 
-            //사용자 정의 함수 -- 쓰기위해서 등록하고 써야함
-            String Myquery =" select function('group_concat', m.username) from Member m ";
+            //탐색하고 싶으면 이렇게 join 해서 해야한다. -- from 절에서 명시적 조인
+            String query = "select m.username From Team t join t.members m";
 
-            em.createQuery(Myquery)
+            em.createQuery(query)
                     .getResultList();
 
             tx.commit();
