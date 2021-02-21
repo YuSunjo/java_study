@@ -45,13 +45,8 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            //엔티티를 파라미터로 전달
-//            String query = "select m from Member m where m = :member";
-
-            String query = "select m from Member m where m.team = :team"
-            em.createQuery(query, Member.class)
-//                    .setParameter("member", member1)
-                    .setParameter("team", teamA)
+            em.createNamedQuery("Member.findByUsername", Member.class)
+                    .setParameter("username", "회원1")
                     .getResultList();
 
             tx.commit();
