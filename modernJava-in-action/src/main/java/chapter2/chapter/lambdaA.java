@@ -1,4 +1,4 @@
-package chapter2.변화하는_요구사항_대응;
+package chapter2.chapter;
 
 import chapter2.Apple;
 import chapter2.ApplePredicate.ApplePredicate;
@@ -6,7 +6,7 @@ import chapter2.ApplePredicate.ApplePredicate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class 변화하는_요구사항_대응 {
+public class lambdaA {
 
     public enum Color { RED, GREEN }
 
@@ -49,7 +49,5 @@ public class 변화하는_요구사항_대응 {
         }
         return result;
     }
-
-
 
 }

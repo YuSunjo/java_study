@@ -1,12 +1,12 @@
 package chapter2.ApplePredicate;
 
 import chapter2.Apple;
-import chapter2.변화하는_요구사항_대응.변화하는_요구사항_대응;
+import chapter2.chapter.lambdaA;
 
 public class AppleGreenColorPredicate implements ApplePredicate {
     @Override
     public boolean test(Apple apple) {
-        return 변화하는_요구사항_대응.Color.GREEN.equals(apple.getColor());
+        return lambdaA.Color.GREEN.equals(apple.getColor());
     }
 
     @Override
