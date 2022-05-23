@@ -1,6 +1,6 @@
 package chapter2.item2;
 
-public class main {
+public class Main {
 
     public static void main(String[] args) {
         //가독성도 좋지 않고 빼먹을 가능성이 있음
